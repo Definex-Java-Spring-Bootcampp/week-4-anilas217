@@ -1,52 +1,37 @@
 package com.patika.kredinbizdenservice.model;
 
+import com.patika.kredinbizdenservice.model.constants.BankEntity;
+import com.patika.kredinbizdenservice.model.constants.CreditCardEntity;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.util.List;
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table (name ="CreditCard")
+public class CreditCard implements Product {
 
-public class CreditCard implements Product{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @Column (name = CreditCardEntity.fee,unique = false,nullable = false)
     private BigDecimal fee;
-    private List<Campaign> campaignList;
+
+    @ManyToOne
+    @JoinColumn(name = "campaing_id")
+    private Campaign campaign;
+
+    @ManyToOne
+    @JoinColumn(name = "bank_id")
     private Bank bank;
 
-    public CreditCard(BigDecimal fee, List<Campaign> campaignList, Bank bank) {
-        this.fee = fee;
-        this.campaignList = campaignList;
-    }
-
-    public BigDecimal getFee() {
-        return fee;
-    }
-
-    public void setFee(BigDecimal fee) {
-        this.fee = fee;
-    }
-
-    public List<Campaign> getCampaignList() {
-        return campaignList;
-    }
-
-    public void setCampaignList(List<Campaign> campaignList) {
-        this.campaignList = campaignList;
-    }
-
-    public Bank getBank() {
-        return bank;
-    }
-
-    public void setBank(Bank bank) {
-        this.bank = bank;
-    }
-
-    @Override
-    public String toString() {
-        return "CreditCard{" +
-                "fee=" + fee +
-                ", campaignList=" + campaignList +
-                ", bank=" + bank +
-                '}';
-    }
-    public static CreditCard createCreditCard(BigDecimal fee, List<Campaign> campaignList, Bank bank) {
-        return new CreditCard(fee, campaignList, bank);
-    }
 }
+

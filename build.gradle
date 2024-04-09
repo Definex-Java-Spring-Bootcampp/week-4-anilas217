@@ -27,6 +27,16 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server:3.0.2'
+    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'mysql:mysql-connector-java:8.0.28'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'jakarta.mail:jakarta.mail-api:2.0.0'
+    implementation 'com.sun.mail:jakarta.mail:1.6.7'
+
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-gateway', version: '3.1.5'
+
+
 }
 
 tasks.named('test') {

@@ -1,43 +1,29 @@
 package com.patika.kredinbizdenservice.model;
 
 import com.patika.kredinbizdenservice.enums.LoanType;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
-
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ConsumerLoan extends Loan {
 
+    @Enumerated(EnumType.STRING)
     private LoanType loanType = LoanType.IHTIYAC_KREDISI;
+
+    @ElementCollection
     private List<Integer> installmentOptions;
 
-    public ConsumerLoan() {
 
-    }
-
-    public ConsumerLoan(Bank bank, BigDecimal amount, Integer installment, Double interestRate) {
-        super(bank, amount, installment, interestRate);
-    }
-
-    public LoanType getLoanType() {
-        return loanType;
-    }
-
-    @Override
-    void calculate(BigDecimal amount, int installment) {
-        // Calculate logic specific to consumer loans
-    }
-
-    public List<Integer> getInstallmentOptions() {
-        return installmentOptions;
-    }
-
-    public void setInstallmentOptions(List<Integer> installmentOptions) {
-        this.installmentOptions = installmentOptions;
-    }
-
-    public static ConsumerLoan createConsumerLoan(Bank bank, BigDecimal amount, Integer installment, Double interestRate, List<Integer> installmentOptions) {
-        ConsumerLoan consumerLoan = new ConsumerLoan(bank, amount, installment, interestRate);
-        consumerLoan.setInstallmentOptions(installmentOptions);
-        return consumerLoan;
-    }
 }

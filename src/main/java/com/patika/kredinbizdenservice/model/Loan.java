@@ -1,75 +1,37 @@
 package com.patika.kredinbizdenservice.model;
 
+import com.patika.kredinbizdenservice.model.constants.LoanEntity;
+import com.patika.kredinbizdenservice.model.constants.UserEntity;
+import jakarta.persistence.*;
+import lombok.*;
+
 import java.math.BigDecimal;
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "Loan")
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Loan implements Product {
 
-public abstract class Loan implements Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @Column(name = LoanEntity.amount, unique = false, nullable = false)
     private BigDecimal amount;
+
+    @Column(name = LoanEntity.installment, unique = false, nullable = false)
     private Integer installment;
-    protected Bank bank;
-    private Double interestRate;
-    // private Campaign campaign; // kampanyalı kredileri üstte çıkart
 
-    //sponsorlu kampanyaları üstte çıkart
+    @ManyToOne
+    @JoinColumn(name = "bank_id")
+    private Bank bank;
 
-    public Loan() {
-    }
+    @Column(name = LoanEntity.interest_rate, unique = false, nullable = false)
+    private Double interest_rate;
 
-    public Loan(Bank bank, BigDecimal amount, Integer installment, Double interestRate) {
-        this.amount = amount;
-        this.installment = installment;
-        this.interestRate = interestRate;
-    }
 
-    abstract void calculate(BigDecimal amount, int installment);
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public Integer getInstallment() {
-        return installment;
-    }
-
-    public void setInstallment(Integer installment) {
-        this.installment = installment;
-    }
-
-    public Bank getBank() {
-        return bank;
-    }
-
-    public void setBank(Bank bank) {
-        this.bank = bank;
-    }
-
-    public Double getInterestRate() {
-        return interestRate;
-    }
-
-    public void setInterestRate(Double interestRate) {
-        this.interestRate = interestRate;
-    }
-
-    @Override
-    public String toString() {
-        return "Loan{" +
-                "amount=" + amount +
-                ", installment=" + installment +
-                ", bank=" + bank +
-                ", interestRate=" + interestRate +
-                '}';
-    }
-    public static Loan createLoan(Bank bank, BigDecimal amount, Integer installment, Double interestRate) {
-        return new Loan(bank, amount, installment, interestRate) {
-            @Override
-            void calculate(BigDecimal amount, int installment) {
-
-            }
-        };
-    }
 }
+
